@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioCompost - Portal Edukasi & Portofolio Kompos</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #F8F9FA;
+            --surface-color: #FFFFFF;
+            --surface-card: #F1F3F5;
+            --text-main: #212529;
+            --text-muted: #6C757D;
+            --primary: #2B8A3E;
+            --primary-hover: #237032;
+            --accent: #E8590C;
+            --border-color: #DEE2E6;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121417;
+            --surface-color: #1A1D23;
+            --surface-card: #22262E;
+            --text-main: #F8F9FA;
+            --text-muted: #A0AEC0;
+            --primary: #40C057;
+            --primary-hover: #37B24D;
+            --accent: #FFA94D;
+            --border-color: #2D3748;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--primary);
+            text-decoration: none;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .logo i {
+            font-size: 1.25rem;
+            background: var(--primary);
+            color: white;
+            padding: 6px;
+            border-radius: 8px;
+        }
+
+        /* Wrapper kanan untuk mendempetkan tombol tema & menu/hamburger */
+        .nav-right-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Tombol Ganti Tema & Hamburger */
+        .theme-toggle, .hamburger-btn {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Menu Links Desktop */
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: white;
+            background-color: var(--primary);
+        }
+
+        /* Responsive Mobile Dropdown */
+        .hamburger-btn {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .hamburger-btn {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none; 
+                position: absolute;
+                top: 60px;
+                left: 1rem;
+                right: 1rem;
+                width: auto;
+                background: rgba(26, 29, 35, 0.95);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0.75rem;
+                gap: 0.3rem;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 16px;
+                z-index: 1050;
+                animation: popDown 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+
+            [data-theme="light"] .nav-links {
+                background: rgba(255, 255, 255, 0.95);
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex; 
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+                font-weight: 600;
+                color: var(--text-main);
+                width: fit-content;
+                display: inline-block;
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+            }
+
+            .nav-links a:hover, .nav-links a.active {
+                background-color: var(--primary);
+                color: white;
+            }
+        }
+
+        @keyframes popDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6.5rem 1.5rem 4rem 1.5rem;
+        }
+
+        section {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        section.active {
+            display: block;
+            animation: fadeInAnim 0.4s ease forwards;
+        }
+
+        /* Full Screen Section untuk Kalkulator & Kontak dengan Transisi Animasi */
+        #kalkulator, #kontak {
+            display: none;
+            position: fixed;
+            top: 65px;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 65px);
+            z-index: 99;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        #kalkulator.active, #kontak.active {
+            display: flex;
+            flex-direction: column;
+            animation: fadeInAnim 0.4s ease forwards;
+        }
+
+        @keyframes fadeInAnim {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero / Beranda dengan Portrait Background */
+        .hero {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 4rem 3rem;
+            border-radius: 30px;
+            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+            color: #ffffff;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        .hero-content h1 span {
+            color: #51cf66;
+        }
+
+        .hero-content p {
+            color: #e9ecef;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(43, 138, 62, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .hero-card {
+            background: rgba(26, 29, 35, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            color: #ffffff;
+        }
+
+        .hero-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            color: #51cf66;
+        }
+
+        .hero-card p {
+            color: #ced4da;
+        }
+
+        /* Summary Cards / Features */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .summary-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .summary-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .summary-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Section Typography */
+        h2.section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Tentang Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .about-box {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 1rem;
+        }
+
+        /* Artikel / Wikipedia Source Content */
+        .wiki-article {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+        }
+
+        .wiki-banner {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+        }
+
+        .wiki-article h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .wiki-article p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Galeri Foto Lokal */
+        .gallery-filters {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.5rem 1.25rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-img-box {
+            height: 200px;
+            background: var(--surface-card);
+            overflow: hidden;
+        }
+
+        .gallery-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-info {
+            padding: 1.25rem;
+        }
+
+        .gallery-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .gallery-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Kalkulator & Kontak Full Satu Layar Penuh dengan Tag <img> Device */
+        .calc-wrapper, .contact-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .bg-device-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65));
+            z-index: -1;
+        }
+
+        .calc-inner, .contact-inner {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            z-index: 1;
+        }
+
+        .calc-container {
+            background: rgba(26, 29, 35, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 24px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            margin-top: 1rem;
+        }
+
+        .calc-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .slider-group label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .slider-group input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+
+        .calc-results {
+            background: rgba(18, 20, 23, 0.75);
+            backdrop-filter: blur(10px);
+            padding: 1.75rem;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .result-box h4 {
+            font-size: 0.85rem;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-box .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #40c057;
+        }
+
+        /* Kontak Grid Full Screen dengan Efek Transparan Blur */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .school-card, .team-card {
+            background: rgba(26, 29, 35, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.75rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            color: #ffffff;
+        }
+
+        .school-card h3, .team-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #51cf66;
+        }
+
+        .school-info p {
+            margin-bottom: 0.75rem;
+            color: #ced4da;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .maps-preview-box {
+            margin-top: 1rem;
+            background: rgba(18, 20, 23, 0.65);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 1.25rem;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .team-members {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .member-row {
+            background: rgba(18, 20, 23, 0.65);
+            backdrop-filter: blur(10px);
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .member-info h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .member-info p {
+            font-size: 0.8rem;
+            color: #a0aec0;
+        }
+
+        .member-badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+
+        /* Modal Zoom Foto */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: none; border: none;
+            font-size: 1.5rem; color: var(--text-main);
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                padding-top: 5.5rem;
+            }
+            #kalkulator, #kontak {
+                height: calc(100vh - 60px);
+                top: 60px;
+            }
+            .hero, .calc-container, .about-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .calc-wrapper, .contact-wrapper {
+                padding: 1rem 0.5rem;
+            }
+            .calc-container, .school-card, .team-card {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="switchTab('beranda')">
+                <i class="fa-solid fa-seedling"></i> BioCompost
+            </a>
+            
+            <div class="nav-right-group">
+                <!-- Tombol Ganti Tema -->
+                <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Ubah Tema">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                </button>
+
+                <!-- Daftar Menu -->
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#" class="nav-item active" onclick="switchTab('beranda')">Beranda</a></li>
+                    <li><a href="#" class="nav-item" onclick="switchTab('tentang')">Tentang</a></li>
+                    <li><a href="#" class="nav-item" onclick="switchTab('artikel')">Artikel</a></li>
+                    <li><a href="#" class="nav-item" onclick="switchTab('kalkulator')">Kalkulator</a></li>
+                    <li><a href="#" class="nav-item" onclick="switchTab('kontak')">Kontak</a></li>
+                </ul>
+
+                <!-- Tombol Hamburger Menu HP -->
+                <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()" title="Menu">
+                    <i class="fa-solid fa-bars" id="hamburgerIcon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- BERANDA SECTION -->
+        <section id="beranda" class="active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Sains & Praktik Pengelolaan <span>Kompos Berkelanjutan</span></h1>
+                    <p>Portal edukasi interaktif berbasis ensiklopedia untuk memahami proses dekomposisi organik, mengatasi permasalahan limbah rumah tangga, dan mewujudkan lingkungan hijau.</p>
+                    <button class="btn-primary" onclick="switchTab('kalkulator')">Buka Kalkulator Kompos <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+                <div class="hero-card">
+                    <h3><i class="fa-solid fa-earth-americas"></i> Ringkasan Portal</h3>
+                    <p>BioCompost menyajikan data ekologis, analisis penumpukan sampah organik, serta solusi pengomposan mandiri yang bersumber langsung dari referensi terpercaya.</p>
+                </div>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <img src="permasalahan.jpeg" alt="Permasalahan Sampah">
+                    <h4>Permasalahan Sampah</h4>
+                    <p>Limbah makanan dan sampah dapur yang dibuang tanpa pengolahan dapat menghasilkan gas metana di TPA serta mencemari lingkungan.</p>
+                </div>
+                <div class="summary-card">
+                    <img src="solusi.jpeg" alt="Solusi Pengomposan">
+                    <h4>Solusi Pengomposan</h4>
+                    <p>Mengubah sampah hijau (nitrogen) dan sampah cokelat (karbon) melalui proses aerasi mikroorganisme menjadi pupuk organik bernutrisi tinggi.</p>
+                </div>
+                <div class="summary-card">
+                    <img src="kalkulator.jpeg" alt="Kalkulator Pintar">
+                    <h4>Kalkulator Otomatis</h4>
+                    <p>Fitur interaktif untuk menghitung takaran bahan masukan kompos secara akurat serta memprediksi hasil akhir pupuk yang matang.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TENTANG SECTION -->
+        <section id="tentang">
+            <h2 class="section-title">Tentang Proyek Ini</h2>
+            <div class="about-grid">
+                <div class="about-box">
+                    <img src="pengertian.jpeg" alt="Apa itu Kompos" class="about-img">
+                    <h3>Definisi Kompos</h3>
+                    <p>Kompos adalah pupuk organik hasil pelapukan bahan-bahan organik yang diuraikan oleh mikroorganisme seperti bakteri dan jamur dalam kondisi lingkungan terkontrol.</p>
+                </div>
+                <div class="about-box">
+                    <img src="https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&w=600&q=80" alt="Tujuan Proyek" class="about-img">
+                    <h3>Tujuan & Manfaat</h3>
+                    <p>Proyek web interaktif ini dikembangkan sebagai media pembelajaran berbasis proyek (PBL) untuk mengedukasi masyarakat mengenai pentingnya daur ulang sampah organik secara mandiri.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARTIKEL / KONTEN / GALERI SECTION -->
+        <section id="artikel">
+            <h2 class="section-title">Artikel & Galeri Kegiatan</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Kumpulan materi ensiklopedia mengenai kompos serta dokumentasi visual proses pengolahannya.</p>
+            
+            <div class="wiki-article">
+                <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1000&q=80" alt="Wikipedia Kompos" class="wiki-banner">
+                <h3>Proses Biokimia Penguraian</h3>
+                <p>Proses pembuatan kompos melibatkan interaksi aktif antara material organik dan mikroorganisme pengurai. Melalui kondisi aerobik maupun anaerobik, material tersebut bertransformasi menjadi humus yang menyuburkan tanah.</p>
+                
+                <h3>Keseimbangan Unsur Hara</h3>
+                <p>Keberhasilan pengomposan sangat bergantung pada rasio perbandingan unsur Nitrogen dari bahan hijau (seperti sisa sayuran) dan unsur Karbon dari bahan cokelat (seperti daun kering).</p>
+            </div>
+
+            <div class="gallery-filters">
+                <button class="filter-btn active" onclick="filterGallery('all')">Semua Foto</button>
+                <button class="filter-btn" onclick="filterGallery('bahan')">Bahan Baku</button>
+                <button class="filter-btn" onclick="filterGallery('proses')">Proses & Alat</button>
+                <button class="filter-btn" onclick="filterGallery('hasil')">Hasil Kompos</button>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item" data-category="bahan" onclick="openModal('Sisa Sayuran Dapur', 'Sampah organik dapur mengandung kadar nitrogen tinggi yang berfungsi memicu aktivitas mikroorganisme pengurai.')">
+                    <div class="gallery-img-box">
+                        <img src="sayur.jpeg" alt="Sisa Dapur">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Sisa Sayuran Dapur</h4>
+                        <p>Kategori: Bahan Baku Hijau</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item" data-category="bahan" onclick="openModal('Dedaunan Kering', 'Dedaunan kering dan ranting berfungsi sebagai sumber karbon esensial untuk menjaga rongga udara pada tumpukan kompos.')">
+                    <div class="gallery-img-box">
+                        <img src="daun.jpeg" alt="Dedaunan Kering">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Dedaunan Kering Taman</h4>
+                        <p>Kategori: Bahan Baku Cokelat</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item" data-category="proses" onclick="openModal('Wadah Komposter', 'Wadah atau tong komposter dirancang khusus untuk memastikan proses sirkulasi udara dan kelembapan tetap terjaga.')">
+                    <div class="gallery-img-box">
+                        <img src="komposter.jpeg" alt="Wadah Komposter">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Wadah Komposter Box</h4>
+                        <p>Kategori: Proses & Alat</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item" data-category="hasil" onclick="openModal('Kompos Matang Siap Pakai', 'Kompos yang telah matang memiliki tekstur gembur, berwarna kehitaman, serta beraroma khas tanah hutan.')">
+                    <div class="gallery-img-box">
+                        <img src="hasil.jpeg" alt="Kompos Matang">
+                    </div>
+                    <div class="gallery-info">
+                        <h4>Kompos Siap Panen</h4>
+                        <p>Kategori: Hasil Akhir</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- KALKULATOR SECTION -->
+    <div id="kalkulator">
+        <div class="calc-wrapper">
+            <img src="kalkulatorbg.jpeg" alt="Background Kalkulator" class="bg-device-img">
+            <div class="bg-overlay"></div>
+            
+            <div class="calc-inner">
+                <h2 class="section-title" style="color: #ffffff;">Kalkulator Kompos Pintar</h2>
+                <p style="color: #e2e8f0; margin-bottom: 1rem; font-size: 0.95rem;">Sesuaikan pengatur geser di bawah untuk menghitung estimasi takaran bahan organik dan hasil akhir kompos secara presisi.</p>
+                
+                <div class="calc-container">
+                    <div class="calc-inputs">
+                        <div class="slider-group">
+                            <label><span>Sisa Sayuran Dapur (Hijau)</span> <span id="val1">5 kg</span></label>
+                            <input type="range" id="slider1" min="0" max="50" value="5" oninput="calculateCompost()">
+                        </div>
+                        <div class="slider-group">
+                            <label><span>Sisa Makanan Lainnya</span> <span id="val2">3 kg</span></label>
+                            <input type="range" id="slider2" min="0" max="50" value="3" oninput="calculateCompost()">
+                        </div>
+                        <div class="slider-group">
+                            <label><span>Dedaunan Kering (Cokelat)</span> <span id="val3">10 kg</span></label>
+                            <input type="range" id="slider3" min="0" max="50" value="10" oninput="calculateCompost()">
+                        </div>
+                    </div>
+
+                    <div class="calc-results">
+                        <div class="result-box">
+                            <h4>Total Berat Bahan Masukan</h4>
+                            <div class="value" id="totalWeight">18 kg</div>
+                        </div>
+                        <div class="result-box">
+                            <h4>Estimasi Kompos Matang</h4>
+                            <div class="value" id="estCompost">~9 kg</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KONTAK SECTION -->
+    <div id="kontak">
+        <div class="contact-wrapper">
+            <img src="smkn4kngaula.jpg" alt="Background Kontak" class="bg-device-img">
+            <div class="bg-overlay"></div>
+
+            <div class="contact-inner">
+                <h2 class="section-title" style="color: #ffffff;">Kontak & Tim Pengembang</h2>
+                <p style="color: #e2e8f0; margin-bottom: 1rem; font-size: 0.95rem;">Informasi instansi pendidikan serta daftar anggota kelompok yang berpartisipasi dalam proyek ini.</p>
+                
+                <div class="contact-grid">
+                    <!-- Sekolah Card -->
+                    <div class="school-card">
+                        <h3><i class="fa-solid fa-school"></i> SMK Negeri 4 Kuningan</h3>
+                        <div class="school-info">
+                            <p><i class="fa-solid fa-location-dot"></i> Jl. Raya Cikeusik No.73, Cikeusik, Kec. Cidahu, Kabupaten Kuningan, Jawa Barat 45595</p>
+                            <p><i class="fa-solid fa-envelope"></i> info@smkn4kuningan.sch.id</p>
+                        </div>
+                        <div class="maps-preview-box">
+                            <p style="font-weight: 700; margin-bottom: 0.5rem; color: #ffffff;"><i class="fa-solid fa-map-pin"></i> Koordinat: -6.955829, 108.684139</p>
+                            <a href="https://maps.google.com/?q=-6.955829,108.684139" target="_blank" class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-top: 0.5rem;">Buka di Google Maps <i class="fa-solid fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Tim Card -->
+                    <div class="team-card">
+                        <h3><i class="fa-solid fa-users"></i> Tim Pengembang (IT josjiss)</h3>
+                        <div class="team-members">
+                            <div class="member-row">
+                                <div class="member-info">
+                                    <h4>Siska Aryani</h4>
+                                    <p>Leader & Developer</p>
+                                </div>
+                                <span class="member-badge">Anggota 1</span>
+                            </div>
+                            <div class="member-row">
+                                <div class="member-info">
+                                    <h4>Chika Fitriyani</h4>
+                                    <p>Researcher</p>
+                                </div>
+                                <span class="member-badge">Anggota 2</span>
+                            </div>
+                            <div class="member-row">
+                                <div class="member-info">
+                                    <h4>Siti Nur Wasiah</h4>
+                                    <p>System Analyst & Tester</p>
+                                </div>
+                                <span class="member-badge">Anggota 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="mainFooter">
+        <p>&copy; 2026 BioCompost - SMK Negeri 4 Kuningan. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal Detail Galeri -->
+    <div class="modal" id="galleryModal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModalBtn()">&times;</button>
+            <h3 id="modalTitle" style="color: var(--primary); margin-bottom: 1rem;">Judul</h3>
+            <p id="modalDesc" style="color: var(--text-muted);"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript Interaktif -->
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburgerIcon = document.getElementById('hamburgerIcon');
+            navLinks.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                hamburgerIcon.className = 'fa-solid fa-xmark';
+            } else {
+                hamburgerIcon.className = 'fa-solid fa-bars';
+            }
+        }
+
+        window.addEventListener('click', function(e) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const hamburgerIcon = document.getElementById('hamburgerIcon');
+            if (!hamburgerBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+                hamburgerIcon.className = 'fa-solid fa-bars';
+            }
+        });
+
+        function switchTab(tabId) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburgerIcon = document.getElementById('hamburgerIcon');
+            navLinks.classList.remove('active');
+            hamburgerIcon.className = 'fa-solid fa-bars';
+
+            document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('kalkulator').classList.remove('active');
+            document.getElementById('kontak').classList.remove('active');
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            if (tabId === 'kalkulator') {
+                const kalkulatorEl = document.getElementById('kalkulator');
+                kalkulatorEl.classList.remove('active');
+                void kalkulatorEl.offsetWidth;
+                kalkulatorEl.classList.add('active');
+                document.getElementById('mainFooter').style.display = 'none';
+            } else if (tabId === 'kontak') {
+                const kontakEl = document.getElementById('kontak');
+                kontakEl.classList.remove('active');
+                void kontakEl.offsetWidth;
+                kontakEl.classList.add('active');
+                document.getElementById('mainFooter').style.display = 'none';
+            } else {
+                const secEl = document.getElementById(tabId);
+                secEl.classList.remove('active');
+                void secEl.offsetWidth;
+                secEl.classList.add('active');
+                document.getElementById('mainFooter').style.display = 'block';
+            }
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if(item.textContent.toLowerCase().includes(tabId) || (tabId === 'beranda' && item.textContent.includes('Beranda'))) {
+                    item.classList.add('active');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fa-solid fa-sun';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.className = 'fa-solid fa-moon';
+            }
+        }
+
+        function calculateCompost() {
+            const v1 = parseInt(document.getElementById('slider1').value);
+            const v2 = parseInt(document.getElementById('slider2').value);
+            const v3 = parseInt(document.getElementById('slider3').value);
+
+            document.getElementById('val1').innerText = v1 + ' kg';
+            document.getElementById('val2').innerText = v2 + ' kg';
+            document.getElementById('val3').innerText = v3 + ' kg';
+
+            const total = v1 + v2 + v3;
+            const estimated = (total * 0.5).toFixed(1);
+
+            document.getElementById('totalWeight').innerText = total + ' kg';
+            document.getElementById('estCompost').innerText = '~' + estimated + ' kg';
+        }
+
+        function filterGallery(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openModal(title, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('galleryModal').classList.add('active');
+        }
+
+        function closeModalBtn() {
+            document.getElementById('galleryModal').classList.remove('active');
+        }
+
+        function closeModal(e) {
+            if (e.target.id === 'galleryModal') {
+                document.getElementById('galleryModal').classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
